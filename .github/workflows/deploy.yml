@@ -37,13 +37,9 @@ jobs:
           docker build -t $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:$IMAGE_TAG .
           docker push $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:$IMAGE_TAG
 
-      - name: Tag latest and push
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: latest
-        run: |
-          docker tag $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:${{ github.sha }} $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:$IMAGE_TAG
-          docker push $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:$IMAGE_TAG
-
-      - name: Verify AWS Credentials
-        run: aws sts get-caller-identity
+      - name: Dokploy Deployment
+        uses: benbristow/dokploy-deploy-action@0.0.1
+        with:
+          auth_token: ${{ secrets.DOKPLOY_AUTH_TOKEN }}
+          application_id: ${{ env.DOKPLOY_APPLICATION_ID }}
+          dokploy_url: ${{ env.DOKPLOY_URL }}
