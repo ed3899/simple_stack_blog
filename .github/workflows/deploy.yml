@@ -1,0 +1,31 @@
+name: AWS Credentials from IAM Role
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github_action
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Verify AWS Credentials
+        run: aws sts get-caller-identity
+
+      - name: Example AWS CLI command
+        run: |
+          aws s3 ls # Replace with your actual AWS commands
