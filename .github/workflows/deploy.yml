@@ -37,5 +37,13 @@ jobs:
           docker build -t $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:$IMAGE_TAG .
           docker push $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:$IMAGE_TAG
 
+      - name: Tag latest and push
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: latest
+        run: |
+          docker tag $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:${{ github.sha }} $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:$IMAGE_TAG
+          docker push $ECR_REGISTRY/${{ secrets.ECR_REPO_NAME }}:$IMAGE_TAG
+
       - name: Verify AWS Credentials
         run: aws sts get-caller-identity
