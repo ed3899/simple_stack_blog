@@ -17,15 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Print Organization Name
-        run: |
-          echo "Organization: ${{ github.repository_owner }}"
-
-      - name: Verify Secrets Existence
-        run: |
-          echo "AWS_ACCOUNT_ID is set: ${{ secrets.AWS_ACCOUNT_ID }}"
-          echo "AWS_REGION is set: ${{ secrets.AWS_REGION }}"
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -35,7 +26,3 @@ jobs:
 
       - name: Verify AWS Credentials
         run: aws sts get-caller-identity
-
-      - name: Example AWS CLI command
-        run: |
-          aws s3 ls # Replace with your actual AWS commands
