@@ -17,6 +17,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Print Organization Name
+        run: |
+          echo "Organization: ${{ github.repository_owner }}"
+
       - name: Verify Secrets Existence
         run: |
           echo "AWS_ACCOUNT_ID is set: ${{ secrets.AWS_ACCOUNT_ID }}"
