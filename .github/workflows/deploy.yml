@@ -24,5 +24,9 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           retry-max-attempts: 5
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
       - name: Verify AWS Credentials
         run: aws sts get-caller-identity
