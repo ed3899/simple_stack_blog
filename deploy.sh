@@ -1,8 +1,6 @@
-curl -X 'POST' \
-  'https://dokploy.simplestack.world/' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer simple_stack_bloghHMswNtcNkffyMghSUzHKZaealhbqkjISjGFcjtlUaRSpgjYfqdMCGwvHvvyycpQ' \
-  -d '{
-  "applicationId": "string"
+curl --location '<Url>' \
+--header 'Authorization: Bearer <Token>' \
+--header 'Content-Type: application/json' \
+--data '{
+    "applicationId": "<ApplicationId>"
 }'
